@@ -7,6 +7,8 @@ name = "pypi"
 django = "*"
 pillow = "*"
 coverage = "*"
+flake8-django = "*"
+flake8-isort = "*"
 
 [dev-packages]
 
