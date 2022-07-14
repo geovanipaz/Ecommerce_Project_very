@@ -1,5 +1,8 @@
 {% extends "store/base.html" %}
-
+{% load static %}
+{% block title %}
+  {{ product.name }}
+{% endblock title %}
 {% block content %}
 <br>
 <div class="container">
@@ -31,8 +34,12 @@
                                 </select>
 
                             </div>
-                            <div class="col-6 text-end"><button type="button" class="btn btn-secondary btn-sm">Add to
-                                    basket</button></div>
+                            <div class="col-6 text-end">
+                                <button type="button" id="add-button" value="{{product.id}}"
+                                    class="btn btn-secondary btn-sm">Add to
+                                    Add to basket
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -41,4 +48,25 @@
     </main>
 
 </div>
+<script>
+    $(document).on('click', '#add-button', function (e) {
+        e.preventDefault();
+        
+        $.ajax({
+            type: 'POST',
+            url: '{% url "basket:basket_add" %}',
+            data: {
+                productid: $('#add-button').val(),
+                productqty: $('#select option:selected').text(),
+                csrfmiddlewaretoken: "{{csrf_token}}",
+                action: 'post'
+            },
+            success: function (json) {
+               document.getElementById("basket-qty").innerHTML = json.qty
+            },
+            error: function (xhr, errmsg, err) {}
+        });
+    })
+    
+</script>
 {% endblock content %}

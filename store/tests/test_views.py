@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 from store.models import Category, Product
 from django.test import Client, RequestFactory, TestCase
-from store.views import all_products
+from store.views import product_all
 '''
 @skip("demonstrating skipping")
 class TestSkip(TestCase):
@@ -43,7 +43,7 @@ class TestViewResponse(TestCase):
         
     def test_homepage_html(self):
         request = HttpRequest()
-        response = all_products(request)
+        response = product_all(request)
         html = response.content.decode('utf8')
         print(html)
         self.assertIn('<title>Home</title>', html)
@@ -52,7 +52,7 @@ class TestViewResponse(TestCase):
         
     def test_view_function(self):
         request = self.factory.get('/item/django-beginners')
-        response = all_products(request)
+        response = product_all(request)
         html = response.content.decode('utf8')
         print(html)
         self.assertIn('<title>Home</title>', html)
